@@ -14,9 +14,9 @@ struct Card {
     var hasBeenShowed = false
     var identifier: Int
     
-    static var uniqueIdentifier = 0
+    private static var uniqueIdentifier = 0
     
-    static func getUniqueIdentifier() -> Int {
+    private static func getUniqueIdentifier() -> Int {
         uniqueIdentifier += 1
         return uniqueIdentifier
     }

@@ -13,20 +13,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var flipCountLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
-    @IBOutlet var cardButtons: [UIButton]!
+    private var numberOfPairsOfCards: Int {
+        return (cardButtons.count + 1) / 2
+    }
     
-    let emojiConstChoices = ["👻", "😀", "🎃", "🤖", "🧠", "👯‍♀️", "👚", "👠", "🎓", "💍", "🕶", "🐶", "🦋", "🦐", "🍎"]
-    let emojiFaces = ["😀", "😅", "😍", "😎", "🥳", "😡", "🥶", "🤥", "🤢", "😈", "🤠", "💀", "😻" ,"🤖", "💩"]
+    @IBOutlet private var cardButtons: [UIButton]!
     
-    lazy var emojiChoices = emojiConstChoices
+    private let emojiConstChoices = ["👻", "😀", "🎃", "🤖", "🧠", "👯‍♀️", "👚", "👠", "🎓", "💍", "🕶", "🐶", "🦋", "🦐", "🍎"]
+    private let emojiFaces = ["😀", "😅", "😍", "😎", "🥳", "😡", "🥶", "🤥", "🤢", "😈", "🤠", "💀", "😻" ,"🤖", "💩"]
     
-    lazy var emojiThemesDict: [String: [String]] = ["General": emojiConstChoices, "Faces": emojiFaces]
+    private lazy var emojiChoices = emojiConstChoices
     
-    lazy var currentTheme = Array(emojiThemesDict.keys).randomElement()
+    private lazy var emojiThemesDict: [String: [String]] = ["General": emojiConstChoices, "Faces": emojiFaces]
     
-    @IBAction func touchCard(_ sender: UIButton) {
+    private lazy var currentTheme = Array(emojiThemesDict.keys).randomElement()
+    
+    @IBAction private func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
@@ -35,7 +39,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         flipCountLabel.text = "Flips: \(game.flipCount)"
         scoreLabel.text = "Score: \(game.score)"
         for i in cardButtons.indices {
@@ -51,7 +55,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func touchNewGame(_ sender: UIButton) {
+    @IBAction private func touchNewGame(_ sender: UIButton) {
         currentTheme = Array(emojiThemesDict.keys).randomElement()
         emojiChoices = emojiThemesDict[currentTheme ?? "General"] ?? emojiConstChoices
         
@@ -61,9 +65,9 @@ class ViewController: UIViewController {
     
 
     //var emoji = Dictionary<Int, String>()
-    var emoji = [Int: String]()
+    private var emoji = [Int: String]()
     
-    func emoji(for card: Card) -> String {
+    private func emoji(for card: Card) -> String {
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
             let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
             emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
