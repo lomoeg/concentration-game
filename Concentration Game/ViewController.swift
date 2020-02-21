@@ -24,6 +24,8 @@ class ViewController: UIViewController {
     private let emojiConstChoices = ["👻", "😀", "🎃", "🤖", "🧠", "👯‍♀️", "👚", "👠", "🎓", "💍", "🕶", "🐶", "🦋", "🦐", "🍎"]
     private let emojiFaces = ["😀", "😅", "😍", "😎", "🥳", "😡", "🥶", "🤥", "🤢", "😈", "🤠", "💀", "😻" ,"🤖", "💩"]
     
+    //private let emojiFaces = "😀😅😍😎🥳😡🥶🤥🤢😈🤠💀😻🤖💩"
+    
     private lazy var emojiChoices = emojiConstChoices
     
     private lazy var emojiThemesDict: [String: [String]] = ["General": emojiConstChoices, "Faces": emojiFaces]
@@ -65,13 +67,13 @@ class ViewController: UIViewController {
     
 
     //var emoji = Dictionary<Int, String>()
-    private var emoji = [Int: String]()
+    private var emoji = [Card: String]()
     
     private func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, emojiChoices.count > 0 {
-            emoji[card.identifier] = emojiChoices.remove(at: emojiChoices.count.arc4random)
+        if emoji[card] == nil, emojiChoices.count > 0 {
+            emoji[card] = emojiChoices.remove(at: emojiChoices.count.arc4random)
         }
-        return emoji[card.identifier] ?? "?"
+        return emoji[card] ?? "?"
     }
 }
 
